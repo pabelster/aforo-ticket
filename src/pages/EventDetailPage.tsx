@@ -34,6 +34,13 @@ export function EventDetailPage() {
               <span className="muted">Precio por boleto</span>
               <b>{formatPrice(event.price)}</b>
             </p>
+            {event.remaining > 0 ? (
+              <Link className="btn btn-primary" to={`/events/${event.id}/checkout`}>
+                Comprar boletos
+              </Link>
+            ) : (
+              <p className="muted">Los boletos están agotados.</p>
+            )}
           </article>
         ) : null}
       </main>

@@ -290,6 +290,7 @@ h1, h2, .display {
 .detail h1 { font-size: clamp(2.8rem, 8vw, 5rem); max-width: 14ch; }
 .detail-cover { height: 280px; border-radius: 24px; overflow: hidden; }
 .prose { white-space: pre-wrap; color: var(--muted); max-width: 42rem; }
+.checkout { width: min(560px, 100%); }
 .catalog { margin-top: 56px; }
 
 .event-cover::after {

@@ -6,8 +6,10 @@ import { DashboardPage } from './pages/admin/DashboardPage.tsx'
 import { EventEditorPage } from './pages/admin/EventEditorPage.tsx'
 import { EventsAdminPage } from './pages/admin/EventsAdminPage.tsx'
 import { EventDetailPage } from './pages/EventDetailPage.tsx'
+import { CheckoutPage } from './pages/CheckoutPage.tsx'
 import { HomePage } from './pages/HomePage.tsx'
 import { LoginPage } from './pages/LoginPage.tsx'
+import { TicketsPage } from './pages/TicketsPage.tsx'
 
 export default function App() {
   return (
@@ -29,6 +31,8 @@ export default function App() {
           <Route path="events/:id" element={<EventEditorPage />} />
         </Route>
         <Route path="/events/:id" element={<EventDetailPage />} />
+        <Route path="/events/:id/checkout" element={<CheckoutPage />} />
+        <Route path="/boletos" element={<TicketsPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </AuthProvider>
