@@ -9,6 +9,7 @@ import { EventDetailPage } from './pages/EventDetailPage.tsx'
 import { CheckoutPage } from './pages/CheckoutPage.tsx'
 import { HomePage } from './pages/HomePage.tsx'
 import { LoginPage } from './pages/LoginPage.tsx'
+import { ScanPage } from './pages/ScanPage.tsx'
 import { TicketsPage } from './pages/TicketsPage.tsx'
 
 export default function App() {
@@ -33,6 +34,14 @@ export default function App() {
         <Route path="/events/:id" element={<EventDetailPage />} />
         <Route path="/events/:id/checkout" element={<CheckoutPage />} />
         <Route path="/boletos" element={<TicketsPage />} />
+        <Route
+          path="/scan"
+          element={
+            <RequireAuth>
+              <ScanPage />
+            </RequireAuth>
+          }
+        />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </AuthProvider>

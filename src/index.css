@@ -460,6 +460,8 @@ h1, h2, .display {
 .scan-result.ok { background: rgba(12, 92, 58, 0.94); }
 .scan-result.bad { background: rgba(128, 24, 38, 0.95); }
 .scan-result h2 { font-size: clamp(2.6rem, 9vw, 4.4rem); }
+.scan-result .pass-kicker { color: rgba(255, 255, 255, 0.78); }
+.scan-result .btn { margin-top: 12px; }
 .scan-help { padding: 16px; color: var(--muted); }
 
 @media (min-width: 800px) {

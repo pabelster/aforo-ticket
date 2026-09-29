@@ -41,6 +41,10 @@ npm run dev
 
 Entra en `/login`. Cualquier usuario autenticado que no esté en `staff` queda fuera del panel y del escáner.
 
+## Escáner
+
+`/scan` abre la cámara del celular. Funciona en `localhost` o por HTTPS. Una dirección IP en HTTP no puede usar la cámara.
+
 ## Qué protege el QR
 
 El código solo contiene un UUID (`qr_token`). El nombre y el correo viven en la base. Al escanear, `validate_ticket` marca el boleto como usado en una sola sentencia `UPDATE ... WHERE status = 'unused'`, así dos teléfonos no pueden aceptar la misma entrada a la vez.

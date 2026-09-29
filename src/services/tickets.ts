@@ -1,5 +1,5 @@
 import { requireSupabase } from '../lib/supabase.ts'
-import type { IssuedTicket, PurchaseInput, TicketStatus } from '../types/database.ts'
+import type { IssuedTicket, PurchaseInput, ScanResult, TicketStatus } from '../types/database.ts'
 
 const purchaseMessages: Record<string, string> = {
   INVALID_QUANTITY: 'Elige entre 1 y 10 boletos.',
@@ -69,4 +69,30 @@ export async function purchaseTickets(input: PurchaseInput) {
     throw new Error('EMPTY_ORDER')
   }
   return payload.map((row) => mapIssued(row as RawTicket))
+}
+
+function text(value: unknown) {
+  return typeof value === 'string' ? value : ''
+}
+
+export async function validateTicket(token: string): Promise<ScanResult> {
+  const { data, error } = await requireSupabase().rpc('validate_ticket', { p_token: token })
+  if (error) throw error
+
+  const payload = typeof data === 'string' ? (JSON.parse(data) as unknown) : data
+  if (!payload || typeof payload !== 'object' || !('result' in payload)) {
+    return { result: 'invalid' }
+  }
+
+  const result = payload.result
+  if (result === 'forbidden') return { result: 'forbidden' }
+  if (result !== 'valid' && result !== 'used') return { result: 'invalid' }
+
+  return {
+    result,
+    attendee_name: text(payload.attendee_name),
+    ticket_number: text(payload.ticket_number),
+    event_name: text(payload.event_name),
+    used_at: text(payload.used_at),
+  }
 }

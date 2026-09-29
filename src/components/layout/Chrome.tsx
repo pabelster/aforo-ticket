@@ -33,6 +33,7 @@ export function PublicHeader() {
 const links = [
   { to: '/admin', label: 'Inicio', end: true },
   { to: '/admin/events', label: 'Eventos', end: false },
+  { to: '/scan', label: 'Escanear', end: true },
 ]
 
 export function AdminLayout() {

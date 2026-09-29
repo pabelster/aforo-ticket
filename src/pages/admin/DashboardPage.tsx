@@ -19,9 +19,14 @@ export function DashboardPage() {
         <p className="muted">
           Publica la cartelera, revisa quién compró y escanea los QR en la puerta.
         </p>
-        <Link className="btn btn-primary" to="/admin/events/new">
-          Crear evento
-        </Link>
+        <div className="row-actions">
+          <Link className="btn btn-primary" to="/admin/events/new">
+            Crear evento
+          </Link>
+          <Link className="btn btn-ghost" to="/scan">
+            Escanear entradas
+          </Link>
+        </div>
       </article>
     </section>
   )
