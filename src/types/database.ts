@@ -89,3 +89,23 @@ export type ScanResult =
     }
   | { result: 'invalid' }
   | { result: 'forbidden' }
+
+export type Attendee = {
+  id: string
+  eventId: string
+  eventName: string
+  attendeeName: string
+  email: string
+  phone: string | null
+  ticketNumber: string
+  status: TicketStatus
+  purchaseDate: string
+  usedAt: string | null
+}
+
+export type SalesOverview = {
+  events: number
+  sold: number
+  used: number
+  pending: number
+}

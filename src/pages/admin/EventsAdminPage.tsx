@@ -58,6 +58,9 @@ export function EventsAdminPage() {
                 <span className={event.status === 'active' ? 'pill pill-ok' : 'pill'}>
                   {event.status === 'active' ? 'Activo' : 'Inactivo'}
                 </span>
+                <Link className="btn btn-ghost btn-sm" to={`/admin/ventas?evento=${event.id}`}>
+                  Ventas
+                </Link>
                 <Link className="btn btn-ghost btn-sm" to={`/admin/events/${event.id}`}>
                   Editar
                 </Link>

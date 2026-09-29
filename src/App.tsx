@@ -5,6 +5,7 @@ import { AdminLayout } from './components/layout/Chrome.tsx'
 import { DashboardPage } from './pages/admin/DashboardPage.tsx'
 import { EventEditorPage } from './pages/admin/EventEditorPage.tsx'
 import { EventsAdminPage } from './pages/admin/EventsAdminPage.tsx'
+import { SalesPage } from './pages/admin/SalesPage.tsx'
 import { EventDetailPage } from './pages/EventDetailPage.tsx'
 import { CheckoutPage } from './pages/CheckoutPage.tsx'
 import { HomePage } from './pages/HomePage.tsx'
@@ -30,6 +31,7 @@ export default function App() {
           <Route path="events" element={<EventsAdminPage />} />
           <Route path="events/new" element={<EventEditorPage />} />
           <Route path="events/:id" element={<EventEditorPage />} />
+          <Route path="ventas" element={<SalesPage />} />
         </Route>
         <Route path="/events/:id" element={<EventDetailPage />} />
         <Route path="/events/:id/checkout" element={<CheckoutPage />} />

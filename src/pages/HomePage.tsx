@@ -38,10 +38,12 @@ export function HomePage() {
           entre dos veces con el mismo código.
         </p>
         <div className="hero-actions">
-          <a className="btn btn-primary" href="#cartelera">
-            Ver eventos
-          </a>
-          <Link className="btn btn-ghost" to="/login">
+          {configured ? (
+            <a className="btn btn-primary" href="#cartelera">
+              Ver eventos
+            </a>
+          ) : null}
+          <Link className={configured ? 'btn btn-ghost' : 'btn btn-primary'} to="/login">
             Entrar como staff
           </Link>
         </div>
