@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth.ts'
 
 export function DashboardPage() {
@@ -16,8 +17,11 @@ export function DashboardPage() {
           Sesión activa como <strong>{user?.email}</strong>.
         </p>
         <p className="muted">
-          Desde aquí vas a publicar eventos, revisar quién compró y escanear los QR en la puerta.
+          Publica la cartelera, revisa quién compró y escanea los QR en la puerta.
         </p>
+        <Link className="btn btn-primary" to="/admin/events/new">
+          Crear evento
+        </Link>
       </article>
     </section>
   )

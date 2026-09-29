@@ -30,7 +30,10 @@ export function PublicHeader() {
   )
 }
 
-const links = [{ to: '/admin', label: 'Inicio', end: true }]
+const links = [
+  { to: '/admin', label: 'Inicio', end: true },
+  { to: '/admin/events', label: 'Eventos', end: false },
+]
 
 export function AdminLayout() {
   const { user, signOut } = useAuth()
