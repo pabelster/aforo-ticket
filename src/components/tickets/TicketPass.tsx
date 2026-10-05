@@ -4,14 +4,12 @@ import type { IssuedTicket } from '../../types/database.ts'
 export function TicketPass({
   ticket,
   qrUrl,
-  onMount,
 }: {
   ticket: IssuedTicket
   qrUrl?: string
-  onMount: (node: HTMLElement | null) => void
 }) {
   return (
-    <article className="pass" ref={onMount}>
+    <article className="pass">
       <div className="pass-top">
         <p className="pass-kicker">Aforo</p>
         <h2>{ticket.event_name}</h2>

@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { RecoverTicketModal } from '../../components/sales/RecoverTicketModal.tsx'
 import { SelectField } from '../../components/ui/Field.tsx'
 import { attendeesToCsv, downloadCsv } from '../../lib/csv.ts'
 import { formatDateTime } from '../../lib/format.ts'
 import { useSalesReport } from '../../hooks/useSales.ts'
-import type { TicketStatus } from '../../types/database.ts'
+import type { Attendee, TicketStatus } from '../../types/database.ts'
 
 const filters: { id: 'all' | TicketStatus; label: string }[] = [
   { id: 'all', label: 'Todos' },
@@ -18,6 +19,7 @@ export function SalesPage() {
   const [eventId, setEventId] = useState(() => params.get('evento') ?? 'all')
   const [status, setStatus] = useState<'all' | TicketStatus>('all')
   const [query, setQuery] = useState('')
+  const [recover, setRecover] = useState<Attendee | null>(null)
 
   const selected = events.find((event) => event.id === eventId) ?? null
   const forEvent = eventId === 'all' ? attendees : attendees.filter((row) => row.eventId === eventId)
@@ -123,15 +125,21 @@ export function SalesPage() {
                       {row.usedAt ? ` · Ingreso ${formatDateTime(row.usedAt)}` : ''}
                     </p>
                   </div>
-                  <span className={row.status === 'used' ? 'pill pill-ok' : 'pill'}>
-                    {row.status === 'used' ? 'Usado' : 'Sin usar'}
-                  </span>
+                  <div className="row-actions">
+                    <button className="btn btn-ghost btn-sm" type="button" onClick={() => setRecover(row)}>
+                      Boleto
+                    </button>
+                    <span className={row.status === 'used' ? 'pill pill-ok' : 'pill'}>
+                      {row.status === 'used' ? 'Usado' : 'Sin usar'}
+                    </span>
+                  </div>
                 </article>
               ))}
             </div>
           )}
         </div>
       ) : null}
+      {recover ? <RecoverTicketModal attendee={recover} onClose={() => setRecover(null)} /> : null}
     </section>
   )
 }

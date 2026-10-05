@@ -23,7 +23,10 @@ cp .env.example .env
 
 3. En el editor SQL de Supabase, ejecuta `supabase/migrations/20260929120000_init.sql`.
 
-4. Crea el administrador en `Authentication → Users → Add user` y desactiva el registro público.
+4. Crea el administrador en `Authentication → Users → Add user` (elige **Create a new user**, no Invite). Marca **Auto Confirm User**, pon correo y contraseña, y guarda. En `Authentication → URL Configuration` deja:
+   - **Site URL:** `http://localhost:5173`
+   - **Redirect URLs:** `http://localhost:5173/**`
+   Desactiva el registro público en Email si puedes.
 
 5. Autoriza esa cuenta como staff. Sustituye el correo:
 
@@ -43,7 +46,19 @@ Entra en `/login`. Cualquier usuario autenticado que no esté en `staff` queda f
 
 ## Escáner
 
-`/scan` abre la cámara del celular. Funciona en `localhost` o por HTTPS. Una dirección IP en HTTP no puede usar la cámara.
+`/scan` abre la cámara del celular. La cámara exige HTTPS.
+
+En la PC:
+
+```bash
+npm run dev
+```
+
+En el celular, misma Wi‑Fi, abre la URL **Network** que imprime Vite, por ejemplo:
+
+`https://192.168.68.107:5173/scan`
+
+Acepta el aviso del certificado (es local). Si la página no carga, en Windows permite el puerto 5173 en el firewall privado.
 
 ## Qué protege el QR
 

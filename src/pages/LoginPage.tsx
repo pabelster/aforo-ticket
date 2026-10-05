@@ -25,16 +25,16 @@ export function LoginPage() {
   const [pending, setPending] = useState(false)
 
   if (loading) return <LoadingScreen />
-  if (session) return <Navigate to={destination} replace />
+  if (session && !pending) return <Navigate to={destination} replace />
 
   async function onSubmit(event: FormEvent) {
     event.preventDefault()
     setPending(true)
     setError(null)
     const message = await signIn(email, password)
-    setPending(false)
     if (message) {
       setError(message)
+      setPending(false)
       return
     }
     navigate(destination, { replace: true })

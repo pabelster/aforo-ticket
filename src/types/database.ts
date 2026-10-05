@@ -94,9 +94,13 @@ export type Attendee = {
   id: string
   eventId: string
   eventName: string
+  eventDate: string
+  startTime: string
+  location: string
   attendeeName: string
   email: string
   phone: string | null
+  qrToken: string
   ticketNumber: string
   status: TicketStatus
   purchaseDate: string

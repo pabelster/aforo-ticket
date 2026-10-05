@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { TicketPass } from '../components/tickets/TicketPass.tsx'
 import { PublicHeader } from '../components/layout/Chrome.tsx'
@@ -8,7 +8,6 @@ import { downloadTicketPng, downloadTicketsPdf } from '../lib/ticket-file.ts'
 
 export function TicketsPage() {
   const [tickets] = useState(() => readOrder())
-  const nodes = useRef(new Map<string, HTMLElement>())
   const [qrs, setQrs] = useState<Record<string, string>>({})
   const [error, setError] = useState<string | null>(null)
   const [busy, setBusy] = useState<string | null>(null)
@@ -75,13 +74,13 @@ export function TicketsPage() {
             {tickets.length > 1 ? (
               <Button
                 variant="ghost"
-                disabled={busy !== null}
+                disabled={busy !== null || tickets.some((ticket) => !qrs[ticket.id])}
                 onClick={() =>
                   void run('all', () =>
                     downloadTicketsPdf(
                       tickets.flatMap((ticket) => {
-                        const node = nodes.current.get(ticket.id)
-                        return node ? [node] : []
+                        const qrUrl = qrs[ticket.id]
+                        return qrUrl ? [{ ticket, qrUrl }] : []
                       }),
                       'boletos-aforo.pdf',
                     ),
@@ -93,22 +92,15 @@ export function TicketsPage() {
             ) : null}
             {tickets.map((ticket) => (
               <section key={ticket.id} className="stack">
-                <TicketPass
-                  ticket={ticket}
-                  qrUrl={qrs[ticket.id]}
-                  onMount={(node) => {
-                    if (node) nodes.current.set(ticket.id, node)
-                    else nodes.current.delete(ticket.id)
-                  }}
-                />
+                <TicketPass ticket={ticket} qrUrl={qrs[ticket.id]} />
                 <div className="ticket-actions">
                   <Button
                     variant="ghost"
                     disabled={busy !== null || !qrs[ticket.id]}
                     onClick={() => {
-                      const node = nodes.current.get(ticket.id)
-                      if (!node) return
-                      void run(ticket.id, () => downloadTicketPng(node, `boleto-${ticket.ticket_number}.png`))
+                      const qrUrl = qrs[ticket.id]
+                      if (!qrUrl) return
+                      void run(ticket.id, () => downloadTicketPng(ticket, qrUrl, `boleto-${ticket.ticket_number}.png`))
                     }}
                   >
                     PNG
@@ -117,10 +109,10 @@ export function TicketsPage() {
                     variant="ghost"
                     disabled={busy !== null || !qrs[ticket.id]}
                     onClick={() => {
-                      const node = nodes.current.get(ticket.id)
-                      if (!node) return
+                      const qrUrl = qrs[ticket.id]
+                      if (!qrUrl) return
                       void run(`${ticket.id}-pdf`, () =>
-                        downloadTicketsPdf([node], `boleto-${ticket.ticket_number}.pdf`),
+                        downloadTicketsPdf([{ ticket, qrUrl }], `boleto-${ticket.ticket_number}.pdf`),
                       )
                     }}
                   >
